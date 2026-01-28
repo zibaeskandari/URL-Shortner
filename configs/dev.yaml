@@ -1,0 +1,10 @@
+server:
+  host: "0.0.0.0"
+  port: 8080
+  env: "dev"
+
+short-code:
+  min-length: 5
+  max-length: 12
+  chars: "abdefghmnpqrstuvwxyz"
+  digits: "23456789"
