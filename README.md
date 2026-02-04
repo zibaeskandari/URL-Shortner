@@ -76,4 +76,5 @@ pkg/shared/                           # Shared utilities
 
 # Developer's documentations:
 - [Database schema](./docs/database-schema.md)
-- [How to set up a new db entity using ent framework in hexagonal architecture with DDD](./docs/how-to-add-a-new-entity.md)
+- [Versioned Migrations with atlas and entgo](./docs/versioned_migration.md)
+    - [How to set up a new db entity using ent framework in hexagonal architecture with DDD](./docs/how-to-add-a-new-entity.md)
