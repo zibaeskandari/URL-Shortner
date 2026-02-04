@@ -2,6 +2,7 @@ package main
 
 import (
 	"URLShortner/pkg"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -9,7 +10,11 @@ import (
 
 func main() {
 	fmt.Println("URL Shortener Project Started!")
-	config, err := pkg.LoadConfig("./configs/" + getConfigProfile() + ".yaml")
+
+	configPath := flag.String("config", "./configs/dev.yaml", "Path to config file")
+	flag.Parse()
+
+	config, err := pkg.LoadConfig(*configPath)
 	if err != nil {
 		log.Fatal(err)
 	}
