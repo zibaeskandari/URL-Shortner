@@ -1,11 +1,12 @@
 
-### How to create new Entity with ent in `hexagonal` architecture as an adaptor
+### How to create new Entity with ent in `hexagonal` architecture as infrastructure/persistence
+
 To add a `user` entity to the project, you can follow this pattern
 | Folders to create | Role  | Description |
 | ----------------- |:------|:------------|
 | internal/domain/user/ | User domain | Define business domain classes, functions and services that compose the domain model. All business rules should be declared in this layer so the application layer can use it to compose your use cases |
 | internal/application/user/ | User Application | Responsible to mediate between input interfaces and business domain |
-| internal/adapters/ent/ | Adaptors | -- , Since ent create its own folders, we put them here |
+| infrastructure/persistence/ent | --- | -- , Since ent create its own folders, we put them here |
 | internal/adapters/repository/ | | --, repository is meant to retrieve and modify aggregate roots |
 
 #### internal/domain/user/ - Domain Layer
@@ -82,7 +83,7 @@ func (r *PostgresUserRepository) FindByID(id domain.UserID) (*domain.User, error
 }
 ```
 
-#### internal/adapters/ent/ - Infrastructure Layer (Framework/ORM)
+#### infrastructure/persistence/ent - Infrastructure Layer (Framework/ORM)
 **Purpose**: Adapters for external tools/libraries (like Ent ORM).
 
 **What to put here:**
@@ -110,7 +111,7 @@ func ToEntUser(domainUser *domain.User) *ent.User {
 |2| internal/application/user/service.go | Use Cases |
 |3| internal/domain/user/ (user.go, repository.go (interface)) | Business Logic |
 |4| internal/adapters/repository/ | Persistence Impl |
-|5| internal/adapters/ent/ | ORM/Framework generated files |
+|5| infrastructure/persistence/ent/ | ORM/Framework generated files |
 
 
 
@@ -119,18 +120,18 @@ User the following commands to create necessary folders:
 ```bash
 mkdir -p internal/domain/user/
 mkdir -p internal/application/user/
-mkdir -p internal/adapters/ent/
+mkdir -p infrastructure/persistence/ent/
 mkdir -p internal/adapters/repository/
 ```
 
-To create a base schema with `ent` run the following command. Pay attention that you have to set `--target`, so `ent` creates its own folder structure in the `internal/adapters/ent` folder.
+To create a base schema with `ent` run the following command. Pay attention that you have to set `--target`, so `ent` creates its own folder structure in the `infrastructure/persistence/ent` folder.
 ```bash
-go run -mod=mod entgo.io/ent/cmd/ent new --target internal/adapters/ent/schema User
+go run -mod=mod entgo.io/ent/cmd/ent new --target infrastructure/persistence/ent/schema User
 ```
 
-Now edit the generated file in `internal/adapters/ent/schema/user.go` and add `Fields` and `Indexes` inside that. After that you can run the following command and `ent` will create all its files and folders. You need to specify the location of `schema` folder here:
+Now edit the generated file in `infrastructure/persistence/ent/user.go` and add `Fields` and `Indexes` inside that. After that you can run the following command and `ent` will create all its files and folders. You need to specify the location of `schema` folder here:
 ```shell
-go run -mod=mod entgo.io/ent/cmd/ent generate ./internal/adapters/ent/schema
+go run -mod=mod entgo.io/ent/cmd/ent generate ./infrastructure/persistence/ent/schema
 ```
 
 #### Add repository

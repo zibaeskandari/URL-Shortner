@@ -1,0 +1,45 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+# Rebuild command (adjust to your main path, e.g. ./cmd/main.go)
+cmd = "go build -o ./tmp/main ./cmd/main.go"
+bin = "tmp/main"
+
+# If you want to run with env vars:
+# full_bin = "APP_ENV=dev ./tmp/main"
+full_bin = ""
+
+include_ext = ["go", "tpl", "tmpl", "html"]
+exclude_dir = ["tmp", "vendor"]
+include_dir = []
+include_file = []
+exclude_file = []
+exclude_regex = ["_test\\.go"]
+exclude_unchanged = true
+follow_symlink = true
+log = "air.log"
+delay = 0
+stop_on_error = true
+send_interrupt = false
+kill_delay = 500
+rerun = false
+rerun_delay = 500
+
+[log]
+time = false
+main_only = false
+silent = false
+
+[color]
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+clean_on_exit = true
+
+[screen]
+clear_on_rebuild = true
+keep_scroll = true
