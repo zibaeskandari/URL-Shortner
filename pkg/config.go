@@ -21,7 +21,19 @@ type ServerConfig struct {
 	Env  string `mapstructure:"env"`
 }
 
-type DatabaseConfig struct{}
+type DatabaseConfig struct {
+	Host            string `mapstructure:"host"`
+	Port            int    `mapstructure:"port"`
+	Username        string `mapstructure:"username"`
+	Password        string `mapstructure:"password"`
+	Database        string `mapstructure:"database"`
+	SSLMode         string `mapstructure:"sslmode"`
+	Dialect         string `mapstructure:"dialect"`
+	MaxConns        int32  `mapstructure:"max_conns"`
+	MinConns        int32  `mapstructure:"min_conns"`
+	MaxConnLifetime int    `mapstructure:"max_conn_lifetime"`
+	MaxConnIdleTime int    `mapstructure:"max_conn_idle_time"`
+}
 
 type TokenConfig struct{}
 

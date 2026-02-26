@@ -1,6 +1,9 @@
 package main
 
 import (
+	"URLShortner/internal/adapters/repository"
+	"URLShortner/internal/core/services"
+	"URLShortner/internal/infrastructure/persistence/db"
 	"URLShortner/pkg"
 	"flag"
 	"fmt"
@@ -17,5 +20,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Config: %+v\n", config)
+
+	postgresDb, err := db.NewPostgresDb(config.Database)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer postgresDb.Close()
+
+	client, err := postgresDb.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	urlRepository := repository.NewPgUrlRepository(client)
+	shortCodeGeneratorService := services.NewCodeGeneratorService(urlRepository, config.ShortCode)
+	fmt.Printf("Sample Short Code %s\n", shortCodeGeneratorService.GetShortCode())
 }

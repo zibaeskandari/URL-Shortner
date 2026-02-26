@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: url_shortner
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pgpassword
+      TZ: UTC
+      PGTZ: UTC
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:

@@ -32,18 +32,18 @@ CREATE INDEX idx_paseto_refresh_token_user_id ON paseto_refresh_token (user_id, 
 
 ### URLs
 ```sql
-CREATE TABLE urls (
-      id VARCHAR(32) PRIMARY KEY,
-      destination TEXT NOT NULL,
-      user_id INTEGER NOT NULL,
-      expires_at TIMESTAMPTZ,
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      deleted_at TIMESTAMPTZ DEFAULT NULL
+-- Create "urls" table
+CREATE TABLE "public"."urls" (
+     "id" character varying(32) NOT NULL,
+     "created_at" timestamp NOT NULL DEFAULT now(),
+     "updated_at" timestamp NOT NULL DEFAULT now(),
+     "deleted_at" timestamp NULL,
+     "destination" text NOT NULL,
+     "user_id" bigint NOT NULL,
+     "expires_at" timestamp NULL,
+     PRIMARY KEY ("id")
 );
-
-CREATE INDEX ix_urls_user_active ON urls (user_id, created_at DESC) WHERE deleted_at IS NULL;
-CREATE INDEX ix_urls_expires ON urls (expires_at) WHERE expires_at IS NOT NULL AND deleted_at IS NULL;
-ALTER TABLE urls ADD CONSTRAINT fk_urls_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+CREATE INDEX "ix_urls_user_active" ON "public"."urls" ("user_id", "updated_at") WHERE (deleted_at IS NULL);
 ```
 
 ### Usage
