@@ -8,3 +8,16 @@ short-code:
   max-length: 12
   chars: "abdefghmnpqrstuvwxyz"
   digits: "23456789"
+
+database:
+  host: "127.0.0.1"
+  port: 5432
+  username: postgres
+  password: pgpassword
+  database: url_shortner
+  sslmode: disable
+  dialect: postgres
+  max_conns: 50
+  min_conns: 5
+  max_conn_lifetime: 180
+  max_conn_idle_time: 30
